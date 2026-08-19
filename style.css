@@ -1,5 +1,5 @@
 :root {
-  --bg: #ECECEC;
+  --bg: #1A1A1A;
   --paper: #FFFFFF;
   --ink: #1A1A1A;
   --ink-soft: #4A4A4A;
@@ -9,6 +9,8 @@
   --accent-soft: #F0F0F0;
   --accent-ink: #FFFFFF;
   --danger: #B3261E;
+  --page-ink: #F5F5F5;
+  --page-muted: #ABABAB;
   --radius: 10px;
   --font: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
@@ -20,7 +22,7 @@ html, body {
   margin: 0;
   padding: 0;
   background: var(--bg);
-  color: var(--ink);
+  color: var(--page-ink);
   font-family: var(--font);
 }
 
@@ -43,6 +45,7 @@ button, input, select, textarea {
   font-size: 20px;
   font-weight: 700;
   margin: 0;
+  color: var(--page-ink);
 }
 .topbar__actions {
   display: flex;
@@ -78,6 +81,22 @@ button, input, select, textarea {
   padding: 14px 16px;
   font-size: 15px;
 }
+
+/* Ghost buttons that sit directly on the dark page background
+   (outside the white cards) need light text/border to stay legible. */
+.topbar .btn--ghost,
+.pane--preview__actions .btn--ghost {
+  color: var(--page-ink);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.topbar .btn--ghost:hover,
+.pane--preview__actions .btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.topbar .btn--dark,
+.bottom-actions .btn--dark {
+  border-color: rgba(255, 255, 255, 0.35);
+}
 .link-btn {
   border: none;
   background: none;
@@ -102,6 +121,7 @@ button, input, select, textarea {
 
 .pane--edit {
   background: var(--paper);
+  color: var(--ink);
   border-radius: var(--radius);
   border: 1px solid var(--border);
   overflow: hidden;
@@ -306,6 +326,7 @@ textarea { resize: vertical; font-family: var(--font); }
 /* ===================== Paper (preview) ===================== */
 .paper {
   background: var(--paper);
+  color: var(--ink);
   border-radius: var(--radius);
   border: 1px solid var(--border);
   padding: 36px;
@@ -473,11 +494,11 @@ textarea { resize: vertical; font-family: var(--font); }
 .site-footer {
   text-align: center;
   font-size: 12.5px;
-  color: var(--muted);
+  color: var(--page-muted);
   padding: 18px 24px 32px;
 }
 .site-footer a {
-  color: var(--ink-soft);
+  color: var(--page-ink);
   font-weight: 600;
   text-decoration: none;
 }
