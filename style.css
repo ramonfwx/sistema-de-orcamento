@@ -14,6 +14,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 
 html, body {
   margin: 0;
@@ -71,6 +72,11 @@ button, input, select, textarea {
 .btn--icon {
   padding: 10px 14px;
   flex: 0 0 auto;
+}
+.btn--wide {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 15px;
 }
 .link-btn {
   border: none;
@@ -237,6 +243,33 @@ textarea { resize: vertical; font-family: var(--font); }
   color: var(--accent-ink);
 }
 
+/* ===================== Logo upload (edit) ===================== */
+.logo-upload {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.logo-upload__preview {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.logo-upload__preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.logo-upload__btn {
+  cursor: pointer;
+}
+
 /* ===================== Items table (edit) ===================== */
 .items-table {
   width: 100%;
@@ -277,6 +310,14 @@ textarea { resize: vertical; font-family: var(--font); }
   border: 1px solid var(--border);
   padding: 36px;
   max-width: 720px;
+}
+.paper__logo {
+  margin-bottom: 16px;
+}
+.paper__logo img {
+  max-height: 56px;
+  max-width: 220px;
+  object-fit: contain;
 }
 .paper__head {
   display: flex;
@@ -418,6 +459,30 @@ textarea { resize: vertical; font-family: var(--font); }
   font-size: 12px;
   color: var(--muted);
   word-break: break-all;
+}
+
+/* ===================== Bottom actions / footer ===================== */
+.bottom-actions {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 8px;
+}
+.bottom-actions .btn--wide {
+  max-width: 460px;
+}
+.site-footer {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--muted);
+  padding: 18px 24px 32px;
+}
+.site-footer a {
+  color: var(--ink-soft);
+  font-weight: 600;
+  text-decoration: none;
+}
+.site-footer a:hover {
+  text-decoration: underline;
 }
 
 /* ===================== Responsive / mobile tabs ===================== */

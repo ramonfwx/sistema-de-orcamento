@@ -71,6 +71,20 @@
             <span class="field__label">Nome / Razão social</span>
             <input type="text" id="fldProvNome" placeholder="Seu nome ou nome do negócio">
           </label>
+          <div class="field">
+            <span class="field__label">Logotipo (opcional)</span>
+            <div class="logo-upload">
+              <div class="logo-upload__preview" id="logoPreviewWrap" hidden>
+                <img id="logoPreview" alt="Logotipo">
+              </div>
+              <label class="btn btn--ghost logo-upload__btn">
+                Escolher imagem
+                <input type="file" id="fldProvLogo" accept="image/*" hidden>
+              </label>
+              <button type="button" class="link-btn" id="btnClearLogo" hidden>Remover logo</button>
+            </div>
+            <p class="hint">Aparece no orçamento, acima do título "ORÇAMENTO".</p>
+          </div>
           <div class="field-row">
             <label class="field">
               <span class="field__label">CPF / CNPJ (opcional)</span>
@@ -227,10 +241,12 @@
   <section class="pane pane--preview" id="panePreview">
     <div class="pane--preview__actions">
       <button type="button" class="btn btn--ghost" id="btnEdit">Editar</button>
-      <button type="button" class="btn btn--dark" id="btnExportPdf">Exportar PDF</button>
     </div>
 
     <div class="paper" id="paper">
+      <div class="paper__logo" id="pvLogoWrap" hidden>
+        <img id="pvLogo" alt="Logotipo">
+      </div>
       <div class="paper__head">
         <div class="paper__title">ORÇAMENTO</div>
         <div class="paper__number" id="pvNumero">001</div>
@@ -296,6 +312,12 @@
   </section>
 
 </main>
+
+<div class="bottom-actions">
+  <button type="button" class="btn btn--dark btn--wide" id="btnExportPdf">Exportar PDF</button>
+</div>
+
+<footer class="site-footer">Desenvolvido por <a href="https://github.com/ramonfwx" target="_blank" rel="noopener">@ramonfwx</a></footer>
 
 <script src="script.js"></script>
 </body>

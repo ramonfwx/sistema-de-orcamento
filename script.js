@@ -26,7 +26,7 @@
   }
 
   // ===================== State =====================
-  let provider = loadJSON(LS.provider, { nome: "", doc: "", telefone: "", email: "", endereco: "", portfolio: "" });
+  let provider = loadJSON(LS.provider, { nome: "", doc: "", telefone: "", email: "", endereco: "", portfolio: "", logo: "" });
   let clients = loadJSON(LS.clients, []); // [{id, nome, doc, telefone, email}]
   let catalog = loadJSON(LS.catalog, { raw: "", items: [] }); // items: [{nome, valor}]
   let lastNumber = loadJSON(LS.lastNumber, 0);
@@ -127,6 +127,57 @@
   const fldProvEmail = $("fldProvEmail");
   const fldProvEndereco = $("fldProvEndereco");
   const fldProvPortfolio = $("fldProvPortfolio");
+  const fldProvLogo = $("fldProvLogo");
+  const logoPreviewWrap = $("logoPreviewWrap");
+  const logoPreview = $("logoPreview");
+  const btnClearLogo = $("btnClearLogo");
+
+  function resizeImageFile(file, maxSize) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = reject;
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > maxSize || height > maxSize) {
+            const scale = maxSize / Math.max(width, height);
+            width = Math.round(width * scale);
+            height = Math.round(height * scale);
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL("image/png"));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  fldProvLogo.addEventListener("change", () => {
+    const file = fldProvLogo.files[0];
+    if (!file) return;
+    resizeImageFile(file, 300)
+      .then((dataUrl) => {
+        provider.logo = dataUrl;
+        saveJSON(LS.provider, provider);
+        fldProvLogo.value = "";
+        fillProviderFields();
+        renderAll();
+      })
+      .catch(() => alert("Não foi possível carregar essa imagem."));
+  });
+
+  btnClearLogo.addEventListener("click", () => {
+    provider.logo = "";
+    saveJSON(LS.provider, provider);
+    fillProviderFields();
+    renderAll();
+  });
 
   function bindProviderField(el, key) {
     el.addEventListener("input", () => {
@@ -144,7 +195,7 @@
 
   $("btnClearProvider").addEventListener("click", () => {
     if (!confirm("Limpar os dados salvos do prestador neste dispositivo?")) return;
-    provider = { nome: "", doc: "", telefone: "", email: "", endereco: "", portfolio: "" };
+    provider = { nome: "", doc: "", telefone: "", email: "", endereco: "", portfolio: "", logo: "" };
     saveJSON(LS.provider, provider);
     fillProviderFields();
     renderAll();
@@ -157,6 +208,14 @@
     fldProvEmail.value = provider.email || "";
     fldProvEndereco.value = provider.endereco || "";
     fldProvPortfolio.value = provider.portfolio || "";
+    if (provider.logo) {
+      logoPreview.src = provider.logo;
+      logoPreviewWrap.hidden = false;
+      btnClearLogo.hidden = false;
+    } else {
+      logoPreviewWrap.hidden = true;
+      btnClearLogo.hidden = true;
+    }
   }
 
   // ===================== Cliente =====================
@@ -465,6 +524,13 @@
   }
 
   function renderPreviewOnly() {
+    if (provider.logo) {
+      $("pvLogo").src = provider.logo;
+      $("pvLogoWrap").hidden = false;
+    } else {
+      $("pvLogoWrap").hidden = true;
+    }
+
     $("pvNumero").textContent = quote.numero || "—";
     $("pvEnviado").textContent = formatDateBR(quote.dataEnvio);
 
