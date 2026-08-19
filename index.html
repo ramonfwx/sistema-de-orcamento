@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Orçamento</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <h1 class="topbar__title">Gerador de Orçamento</h1>
+  <div class="topbar__actions">
+    <button type="button" class="btn btn--ghost" id="btnViewToggle">Visualizar</button>
+    <button type="button" class="btn btn--dark" id="btnNew">+ Novo orçamento</button>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- ===================== EDIT PANE ===================== -->
+  <section class="pane pane--edit is-visible" id="paneEdit">
+    <div class="accordion" id="accordion">
+
+      <!-- Detalhes -->
+      <div class="acc-item is-open" data-acc="detalhes">
+        <button type="button" class="acc-header">
+          <span class="acc-header__title">Detalhes</span>
+          <span class="acc-header__status" id="statusDetalhes">001 · 15 dias</span>
+          <span class="acc-header__toggle">+</span>
+        </button>
+        <div class="acc-body">
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">Número</span>
+              <input type="text" id="fldNumero" value="001">
+            </label>
+            <label class="field">
+              <span class="field__label">Data de envio</span>
+              <input type="date" id="fldDataEnvio">
+            </label>
+          </div>
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">Validade</span>
+              <select id="fldValidade">
+                <option value="7">7 dias</option>
+                <option value="15" selected>15 dias</option>
+                <option value="30">30 dias</option>
+                <option value="0">Sem validade definida</option>
+              </select>
+            </label>
+          </div>
+          <label class="field">
+            <span class="field__label">Referência (opcional)</span>
+            <input type="text" id="fldReferencia" placeholder="Ex: Projeto site institucional">
+          </label>
+        </div>
+      </div>
+
+      <!-- Prestador -->
+      <div class="acc-item" data-acc="prestador">
+        <button type="button" class="acc-header">
+          <span class="acc-header__title">Prestador</span>
+          <span class="acc-header__status" id="statusPrestador">Nenhum</span>
+          <span class="acc-header__toggle">+</span>
+        </button>
+        <div class="acc-body">
+          <p class="hint">Salvo automaticamente neste dispositivo — preencha uma vez e ele lembra da próxima. <button type="button" class="link-btn" id="btnClearProvider">Limpar dados salvos</button></p>
+          <label class="field">
+            <span class="field__label">Nome / Razão social</span>
+            <input type="text" id="fldProvNome" placeholder="Seu nome ou nome do negócio">
+          </label>
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">CPF / CNPJ (opcional)</span>
+              <input type="text" id="fldProvDoc">
+            </label>
+            <label class="field">
+              <span class="field__label">Telefone</span>
+              <input type="text" id="fldProvTelefone" placeholder="(00) 00000-0000">
+            </label>
+          </div>
+          <label class="field">
+            <span class="field__label">E-mail</span>
+            <input type="email" id="fldProvEmail">
+          </label>
+          <label class="field">
+            <span class="field__label">Endereço (opcional)</span>
+            <input type="text" id="fldProvEndereco">
+          </label>
+          <label class="field">
+            <span class="field__label">Link do portfólio (opcional)</span>
+            <input type="text" id="fldProvPortfolio" placeholder="https://...">
+          </label>
+          <p class="hint">Se preenchido, um QR code aparece no orçamento.</p>
+        </div>
+      </div>
+
+      <!-- Cliente -->
+      <div class="acc-item" data-acc="cliente">
+        <button type="button" class="acc-header">
+          <span class="acc-header__title">Cliente</span>
+          <span class="acc-header__status" id="statusCliente">Nenhum</span>
+          <span class="acc-header__toggle">+</span>
+        </button>
+        <div class="acc-body">
+          <div class="field-row">
+            <label class="field field--grow">
+              <span class="field__label">Cliente salvo</span>
+              <select id="fldClienteSalvo">
+                <option value="">Nenhum</option>
+              </select>
+            </label>
+            <button type="button" class="btn btn--ghost btn--icon" id="btnSaveClient" title="Salvar cliente atual">+</button>
+          </div>
+          <label class="field">
+            <span class="field__label">Nome do cliente</span>
+            <input type="text" id="fldCliNome" placeholder="Nome do cliente">
+          </label>
+          <div class="field-row">
+            <label class="field">
+              <span class="field__label">CPF / CNPJ (opcional)</span>
+              <input type="text" id="fldCliDoc">
+            </label>
+            <label class="field">
+              <span class="field__label">Telefone (opcional)</span>
+              <input type="text" id="fldCliTelefone">
+            </label>
+          </div>
+          <label class="field">
+            <span class="field__label">E-mail (opcional)</span>
+            <input type="email" id="fldCliEmail">
+          </label>
+        </div>
+      </div>
+
+      <!-- Catálogo de serviços -->
+      <div class="acc-item" data-acc="catalogo">
+        <button type="button" class="acc-header">
+          <span class="acc-header__title">Catálogo de serviços</span>
+          <span class="acc-header__status" id="statusCatalogo">Nenhum</span>
+          <span class="acc-header__toggle">+</span>
+        </button>
+        <div class="acc-body">
+          <p class="hint">Cole um serviço por linha, no formato <strong>Nome - Valor</strong>. Fica salvo neste dispositivo e disponível pra escolher lá embaixo, em "Itens".<br>Ex:<br>Imagem visual - 800<br>Pacote de posts - 450<br>Manual de marca - 1200</p>
+          <textarea id="fldCatalogo" rows="5" placeholder="Imagem visual - 800&#10;Pacote de posts - 450&#10;Manual de marca - 1200"></textarea>
+          <button type="button" class="btn btn--dark" id="btnSaveCatalog">Salvar catálogo</button>
+        </div>
+      </div>
+
+      <!-- Itens -->
+      <div class="acc-item" data-acc="itens">
+        <button type="button" class="acc-header">
+          <span class="acc-header__title">Itens</span>
+          <span class="acc-header__status" id="statusItens">Nenhum</span>
+          <span class="acc-header__toggle">+</span>
+        </button>
+        <div class="acc-body">
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Serviço</th>
+                <th>Qtd</th>
+                <th>Valor unit.</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="itemsBody"></tbody>
+          </table>
+          <button type="button" class="btn btn--ghost" id="btnAddItem">+ Adicionar item</button>
+
+          <div class="field-row" style="margin-top:16px;">
+            <label class="field">
+              <span class="field__label">Desconto</span>
+              <div class="input-with-toggle">
+                <input type="number" id="fldDesconto" min="0" step="0.01" value="0">
+                <div class="segmented" id="segDescontoTipo">
+                  <button type="button" class="segmented__opt is-active" data-val="valor">R$</button>
+                  <button type="button" class="segmented__opt" data-val="percent">%</button>
+                </div>
+              </div>
+            </label>
+            <label class="field">
+              <span class="field__label">Imposto (opcional)</span>
+              <div class="input-with-toggle">
+                <input type="number" id="fldImposto" min="0" step="0.01" value="0">
+                <span class="input-suffix">%</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagamento -->
+      <div class="acc-item" data-acc="pagamento">
+        <button type="button" class="acc-header">
+          <span class="acc-header__title">Pagamento</span>
+          <span class="acc-header__status" id="statusPagamento">Nenhum</span>
+          <span class="acc-header__toggle">+</span>
+        </button>
+        <div class="acc-body">
+          <label class="field">
+            <span class="field__label">Forma de pagamento</span>
+            <input type="text" id="fldPagamento" placeholder="Ex: Pix à vista, 50% de entrada...">
+          </label>
+        </div>
+      </div>
+
+      <!-- Observações -->
+      <div class="acc-item" data-acc="observacoes">
+        <button type="button" class="acc-header">
+          <span class="acc-header__title">Observações</span>
+          <span class="acc-header__status" id="statusObservacoes">Nenhuma</span>
+          <span class="acc-header__toggle">+</span>
+        </button>
+        <div class="acc-body">
+          <textarea id="fldObservacoes" rows="4" placeholder="Observações adicionais para o cliente"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== PREVIEW PANE ===================== -->
+  <section class="pane pane--preview" id="panePreview">
+    <div class="pane--preview__actions">
+      <button type="button" class="btn btn--ghost" id="btnEdit">Editar</button>
+      <button type="button" class="btn btn--dark" id="btnExportPdf">Exportar PDF</button>
+    </div>
+
+    <div class="paper" id="paper">
+      <div class="paper__head">
+        <div class="paper__title">ORÇAMENTO</div>
+        <div class="paper__number" id="pvNumero">001</div>
+      </div>
+      <div class="paper__ref">
+        <div><span class="paper__ref-label">Enviado</span> <span id="pvEnviado">—</span></div>
+        <div id="pvValidoWrap"><span class="paper__ref-label">Válido até</span> <span id="pvValido">—</span></div>
+        <div id="pvReferenciaWrap" hidden><span class="paper__ref-label">Referência</span> <span id="pvReferencia"></span></div>
+      </div>
+      <div class="paper__parties">
+        <div class="paper__party">
+          <div class="paper__party-label">DE</div>
+          <div class="paper__party-name" id="pvProvNome">Seu nome</div>
+          <div class="paper__party-line" id="pvProvDoc" hidden></div>
+          <div class="paper__party-line" id="pvProvTelefone" hidden></div>
+          <div class="paper__party-line" id="pvProvEmail" hidden></div>
+          <div class="paper__party-line" id="pvProvEndereco" hidden></div>
+        </div>
+        <div class="paper__party">
+          <div class="paper__party-label">PARA</div>
+          <div class="paper__party-name" id="pvCliNome">Nome do cliente</div>
+          <div class="paper__party-line" id="pvCliDoc" hidden></div>
+          <div class="paper__party-line" id="pvCliTelefone" hidden></div>
+          <div class="paper__party-line" id="pvCliEmail" hidden></div>
+        </div>
+      </div>
+
+      <table class="paper__table">
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Qtd</th>
+            <th>Valor unit.</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="pvItemsBody"></tbody>
+      </table>
+
+      <div class="paper__totals">
+        <div class="paper__totals-row"><span>Subtotal</span><span id="pvSubtotal">R$ 0,00</span></div>
+        <div class="paper__totals-row" id="pvDescontoWrap" hidden><span>Desconto</span><span id="pvDesconto">– R$ 0,00</span></div>
+        <div class="paper__totals-row" id="pvImpostoWrap" hidden><span>Imposto</span><span id="pvImposto">R$ 0,00</span></div>
+        <div class="paper__totals-row paper__totals-row--total"><span>Total do orçamento</span><span id="pvTotal">R$ 0,00</span></div>
+      </div>
+
+      <div class="paper__foot" id="pvFootWrap" hidden>
+        <div class="paper__foot-block" id="pvPagamentoWrap" hidden>
+          <div class="paper__foot-label">Forma de pagamento</div>
+          <div id="pvPagamento"></div>
+        </div>
+        <div class="paper__foot-block" id="pvObservacoesWrap" hidden>
+          <div class="paper__foot-label">Observações</div>
+          <div id="pvObservacoes"></div>
+        </div>
+      </div>
+
+      <div class="paper__portfolio" id="pvPortfolioWrap" hidden>
+        <img id="pvQr" alt="QR code do portfólio">
+        <div class="paper__portfolio-link" id="pvPortfolioLink"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
