@@ -15,6 +15,7 @@
   --radius-sm: 8px;
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 24px 48px -16px rgba(0, 0, 0, 0.55);
   --font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Fraunces', Georgia, "Times New Roman", serif;
 }
 
 * { box-sizing: border-box; }
@@ -380,26 +381,30 @@ textarea { resize: vertical; font-family: var(--font); }
   max-width: 720px;
   font-variant-numeric: tabular-nums;
 }
-.paper__logo {
-  margin-bottom: 20px;
-}
-.paper__logo img {
-  max-height: 52px;
-  max-width: 220px;
-  object-fit: contain;
-}
 .paper__head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   border-bottom: 2px solid var(--ink);
   padding-bottom: 16px;
   margin-bottom: 16px;
 }
+.paper__head-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.paper__logo img {
+  display: block;
+  max-height: 38px;
+  max-width: 150px;
+  object-fit: contain;
+}
 .paper__title {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 .paper__number {
   font-size: 14px;
