@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gerador de Orçamento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,9 +30,10 @@
         <button type="button" class="acc-header">
           <span class="acc-header__title">Detalhes</span>
           <span class="acc-header__status" id="statusDetalhes">001 · 15 dias</span>
-          <span class="acc-header__toggle">+</span>
+          <span class="acc-header__toggle" aria-hidden="true"></span>
         </button>
         <div class="acc-body">
+          <div class="acc-body__inner">
           <div class="field-row">
             <label class="field">
               <span class="field__label">Número</span>
@@ -55,6 +59,7 @@
             <span class="field__label">Referência (opcional)</span>
             <input type="text" id="fldReferencia" placeholder="Ex: Projeto site institucional">
           </label>
+          </div>
         </div>
       </div>
 
@@ -63,9 +68,10 @@
         <button type="button" class="acc-header">
           <span class="acc-header__title">Prestador</span>
           <span class="acc-header__status" id="statusPrestador">Nenhum</span>
-          <span class="acc-header__toggle">+</span>
+          <span class="acc-header__toggle" aria-hidden="true"></span>
         </button>
         <div class="acc-body">
+          <div class="acc-body__inner">
           <p class="hint">Salvo automaticamente neste dispositivo — preencha uma vez e ele lembra da próxima. <button type="button" class="link-btn" id="btnClearProvider">Limpar dados salvos</button></p>
           <label class="field">
             <span class="field__label">Nome / Razão social</span>
@@ -108,6 +114,7 @@
             <input type="text" id="fldProvPortfolio" placeholder="https://...">
           </label>
           <p class="hint">Se preenchido, um QR code aparece no orçamento.</p>
+          </div>
         </div>
       </div>
 
@@ -116,9 +123,10 @@
         <button type="button" class="acc-header">
           <span class="acc-header__title">Cliente</span>
           <span class="acc-header__status" id="statusCliente">Nenhum</span>
-          <span class="acc-header__toggle">+</span>
+          <span class="acc-header__toggle" aria-hidden="true"></span>
         </button>
         <div class="acc-body">
+          <div class="acc-body__inner">
           <div class="field-row">
             <label class="field field--grow">
               <span class="field__label">Cliente salvo</span>
@@ -146,6 +154,7 @@
             <span class="field__label">E-mail (opcional)</span>
             <input type="email" id="fldCliEmail">
           </label>
+          </div>
         </div>
       </div>
 
@@ -154,12 +163,14 @@
         <button type="button" class="acc-header">
           <span class="acc-header__title">Catálogo de serviços</span>
           <span class="acc-header__status" id="statusCatalogo">Nenhum</span>
-          <span class="acc-header__toggle">+</span>
+          <span class="acc-header__toggle" aria-hidden="true"></span>
         </button>
         <div class="acc-body">
+          <div class="acc-body__inner">
           <p class="hint">Cole um serviço por linha, no formato <strong>Nome - Valor</strong>. Fica salvo neste dispositivo e disponível pra escolher lá embaixo, em "Itens".<br>Ex:<br>Imagem visual - 800<br>Pacote de posts - 450<br>Manual de marca - 1200</p>
           <textarea id="fldCatalogo" rows="5" placeholder="Imagem visual - 800&#10;Pacote de posts - 450&#10;Manual de marca - 1200"></textarea>
           <button type="button" class="btn btn--dark" id="btnSaveCatalog">Salvar catálogo</button>
+          </div>
         </div>
       </div>
 
@@ -168,9 +179,10 @@
         <button type="button" class="acc-header">
           <span class="acc-header__title">Itens</span>
           <span class="acc-header__status" id="statusItens">Nenhum</span>
-          <span class="acc-header__toggle">+</span>
+          <span class="acc-header__toggle" aria-hidden="true"></span>
         </button>
         <div class="acc-body">
+          <div class="acc-body__inner">
           <table class="items-table">
             <thead>
               <tr>
@@ -204,6 +216,7 @@
               </div>
             </label>
           </div>
+          </div>
         </div>
       </div>
 
@@ -212,13 +225,15 @@
         <button type="button" class="acc-header">
           <span class="acc-header__title">Pagamento</span>
           <span class="acc-header__status" id="statusPagamento">Nenhum</span>
-          <span class="acc-header__toggle">+</span>
+          <span class="acc-header__toggle" aria-hidden="true"></span>
         </button>
         <div class="acc-body">
+          <div class="acc-body__inner">
           <label class="field">
             <span class="field__label">Forma de pagamento</span>
             <input type="text" id="fldPagamento" placeholder="Ex: Pix à vista, 50% de entrada...">
           </label>
+          </div>
         </div>
       </div>
 
@@ -227,10 +242,12 @@
         <button type="button" class="acc-header">
           <span class="acc-header__title">Observações</span>
           <span class="acc-header__status" id="statusObservacoes">Nenhuma</span>
-          <span class="acc-header__toggle">+</span>
+          <span class="acc-header__toggle" aria-hidden="true"></span>
         </button>
         <div class="acc-body">
+          <div class="acc-body__inner">
           <textarea id="fldObservacoes" rows="4" placeholder="Observações adicionais para o cliente"></textarea>
+          </div>
         </div>
       </div>
 
